@@ -121,6 +121,7 @@ func handleConf(cfg *config) {
 	}
 
 	if err := conn.Connect(); err != nil {
+		conn = nil
 		log.Println(err)
 		timod.WriteConfErr()
 		return
@@ -129,6 +130,7 @@ func handleConf(cfg *config) {
 	if cfg.Token != nil {
 		if err := conn.AuthToken(*cfg.Token); err != nil {
 			conn.Close()
+			conn = nil
 			log.Println(err)
 			timod.WriteConfErr()
 			return
@@ -136,6 +138,7 @@ func handleConf(cfg *config) {
 	} else {
 		if err := conn.AuthPassword(*cfg.Username, *cfg.Password); err != nil {
 			conn.Close()
+			conn = nil
 			log.Println(err)
 			timod.WriteConfErr()
 			return
@@ -166,6 +169,15 @@ func onResponse(pkg *timod.Pkg, res []byte, err error) {
 func onModuleReq(pkg *timod.Pkg) {
 	mux.RLock()
 	defer mux.RUnlock()
+
+	if conn == nil {
+		timod.WriteEx(
+			pkg.Pid,
+			timod.ExCancelled,
+			"No connection, make sure you used set_module_conf() to initialze the module")
+		return
+	}
+
 	var req request
 	err := msgpack.Unmarshal(pkg.Data, &req)
 	if err != nil {
