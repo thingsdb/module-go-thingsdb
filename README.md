@@ -2,6 +2,7 @@
 
 ThingsDB module written using the [Go language](https://golang.org).
 
+With this module you gain access other scopes. This works both on the same node as with a connection to another ThingsDB cluster.
 
 ## Installation
 
