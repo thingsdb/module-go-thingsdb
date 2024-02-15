@@ -1,6 +1,6 @@
 {
     "doc": "https://github.com/thingsdb/module-go-thingsdb#readme",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "main": {
         "linux/386": "bin/thingsdb_linux_386.bin",
         "linux/amd64": "bin/thingsdb_linux_amd64.bin",

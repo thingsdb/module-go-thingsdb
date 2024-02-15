@@ -102,7 +102,7 @@ func handleConf(cfg *config) {
 		conn.Close()
 	}
 
-	conn := thingsdb.NewConn(cfg.Host, port, tlsConfig)
+	conn = thingsdb.NewConn(cfg.Host, port, tlsConfig)
 	conn.DefaultTimeout = 10 * time.Second
 
 	if cfg.Timeout != nil {
