@@ -66,7 +66,7 @@ func handleConf(cfg *config) {
 	var port uint16 = 9200
 	var tlsConfig *tls.Config = nil
 
-	if cfg.Port == nil {
+	if cfg.Port != nil {
 		port = *cfg.Port
 	}
 
